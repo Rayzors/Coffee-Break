@@ -64,7 +64,6 @@ export default {
         this.$refs.main.scrollTop = 0;
       }
       if (to.path.includes('/category/') || from.path.includes('/category/')) {
-        console.log(to, from);
         this.currentCategory = to.params.categoryid || from.params.categoryid;
       } else {
         this.currentCategory = null;
