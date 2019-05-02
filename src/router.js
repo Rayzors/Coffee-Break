@@ -16,7 +16,7 @@ export default new Router({
       component: Home,
     },
     {
-      path: '/watch/:id',
+      path: '/watch/:videoid',
       name: 'watch',
       component: Watch,
     },
@@ -26,7 +26,7 @@ export default new Router({
       component: Search,
     },
     {
-      path: '/category/:id',
+      path: '/category/:categoryid',
       name: 'category',
       component: Category,
     },

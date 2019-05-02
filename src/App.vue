@@ -59,13 +59,14 @@ export default {
     this.$refs.main.scrollTop = 0;
   },
   watch: {
-    $route(to) {
+    $route(to, from) {
       if (to.path) {
         this.$refs.main.scrollTop = 0;
       }
-      if (to.path.includes('/category/')) {
-        this.currentCategory = this.$route.params.id;
-      } else if (to.path === '/') {
+      if (to.path.includes('/category/') || from.path.includes('/category/')) {
+        console.log(to, from);
+        this.currentCategory = to.params.categoryid || from.params.categoryid;
+      } else {
         this.currentCategory = null;
       }
     },

@@ -25,11 +25,12 @@ export default {
   data() {
     return {
       videos: null,
+      categoryId: this.$route.params.categoryid,
     };
   },
   async mounted() {
-    if (this.$route.params.id) {
-      this.videos = await this.getVideosByCategory(this.$route.params.id);
+    if (this.$route.params.categoryid) {
+      this.videos = await this.getVideosByCategory(this.$route.params.categoryid);
     }
   },
 };

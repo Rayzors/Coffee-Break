@@ -1,7 +1,7 @@
 <template>
   <div class="container" v-if="video">
     <div class="video__container">
-      <iframe :src="`https://youtube.com/embed/${video.id}?enablejsapi=1&autoplay=1&playsinline=1&origin=https://www.youtube.com`" frameborder="0" allowfullscreen></iframe>
+      <iframe :src="`https://youtube.com/embed/${video.id}?enablejsapi=1&autoplay=1&playsinline=1&origin=${window.origin}`" frameborder="0" allowfullscreen></iframe>
     </div>
     <div class="video__informations-container">
       <div class="video__informations-container__top">
@@ -56,6 +56,7 @@
 <script>
 import Loader from '@/components/Loader';
 import moment from 'moment';
+
 moment.locale('fr');
 
 export default {
@@ -63,10 +64,11 @@ export default {
   data() {
     return {
       video: null,
+      window,
     };
   },
   async created() {
-    const videos = await this.getVideosByIds(this.$route.params.id);
+    const videos = await this.getVideosByIds(this.$route.params.videoid);
     this.video = { ...videos[0] };
     this.$emit('currentVideoCategoryId', this.video.snippet.categoryId);
   },
