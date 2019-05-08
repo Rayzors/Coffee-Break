@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import Article from '@/components/Article';
-import Loader from '@/components/Loader';
+import Article from '@/components/Article.vue';
+import Loader from '@/components/Loader.vue';
 
 
 export default {

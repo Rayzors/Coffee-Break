@@ -14,7 +14,11 @@
           <h2 class="category-title">Categories</h2>
           <ul class="menu-list" v-if="categories">
             <li v-for="({id, snippet: {title}}, i) of categories" :key="i">
-              <router-link :to="`/category/${id}`" class="menu-list__link" :class="isActive(id)">{{ title }}</router-link>
+              <router-link
+                :to="`/category/${id}`"
+                class="menu-list__link"
+                :class="isActive(id)"
+              >{{ title }}</router-link>
             </li>
           </ul>
         </nav>
@@ -23,7 +27,11 @@
     <main class="main" ref="main">
       <div class="topbar">
         <div class="topbar__content">
-          <button @click="$router.go(-1)" v-if="$route.path !== `/` && !$route.path.includes('/category/')" class="backButton">
+          <button
+            @click="$router.go(-1)"
+            v-if="$route.path !== `/` && !$route.path.includes('/category/')"
+            class="backButton"
+          >
             <svg id="icon-keyboard_arrow_left" viewBox="0 0 24 24">
               <title>keyboard_arrow_left</title>
               <path d="M15.422 16.078l-1.406 1.406-6-6 6-6 1.406 1.406-4.594 4.594z"></path>
@@ -33,14 +41,16 @@
         </div>
       </div>
       <transition name="slide-fade-up" mode="out-in" appear>
-        <router-view :key="$route.fullPath" @currentVideoCategoryId="setCurrentCategory"></router-view>
+        <router-view
+        :key="$route.fullPath"
+        @currentVideoCategoryId="setCurrentCategory"></router-view>
       </transition>
     </main>
   </div>
 </template>
 
 <script>
-import Searchbar from '@/components/Searchbar';
+import Searchbar from '@/components/Searchbar.vue';
 
 export default {
   name: 'yt-electron',
@@ -53,7 +63,9 @@ export default {
   },
   async created() {
     const { items: categories } = await this.getCategories();
-    this.categories = categories.filter(({ snippet: { assignable } }) => assignable);
+    this.categories = categories.filter(
+      ({ snippet: { assignable } }) => assignable,
+    );
   },
   mounted() {
     this.$refs.main.scrollTop = 0;
@@ -63,7 +75,10 @@ export default {
       if (to.path) {
         this.$refs.main.scrollTop = 0;
       }
-      if (to.path.includes('/category/') || from.path.includes('/category/')) {
+      if (
+        to.path.includes('/category/')
+        || (from.path.includes('/category/') && to.path.includes('/watch/'))
+      ) {
         this.currentCategory = to.params.categoryid || from.params.categoryid;
       } else {
         this.currentCategory = null;
@@ -79,15 +94,13 @@ export default {
   },
   computed: {
     isActive() {
-      return id => ((this.currentCategory === id) ? 'router-link-exact-active' : '');
+      return id => (this.currentCategory === id ? 'router-link-exact-active' : '');
     },
   },
-
 };
 </script>
 
 <style lang="scss">
-
 @font-face {
   font-family: "Open Sans";
   src: url(~@/assets/fonts/opensans/OpenSans-Regular.ttf) format("truetype");
@@ -107,8 +120,12 @@ export default {
   font-style: normal;
 }
 
-[v-cloak] {background: red;}
-[v-cloak] > * { display:none }
+[v-cloak] {
+  background: red;
+}
+[v-cloak] > * {
+  display: none;
+}
 
 * {
   box-sizing: border-box;
@@ -166,7 +183,7 @@ body {
 }
 
 .logo {
-  color: rgba(#FF3E8F, 1);
+  color: rgba(#ff3e8f, 1);
   font-weight: bold;
   text-decoration: none;
   font-size: 20px;
@@ -288,9 +305,9 @@ body {
     }
 
     &.router-link-exact-active {
-      color:#fff !important;
+      color: #fff !important;
       font-weight: bold;
-      background: linear-gradient(-90deg, rgba(#FF3E8F, 1), rgba(#FFBA8F, 1));
+      background: linear-gradient(-90deg, rgba(#ff3e8f, 1), rgba(#ffba8f, 1));
       box-shadow: 0 24px 50px rgba(0, 0, 0, 0.2);
       margin-bottom: 20px;
     }
@@ -335,10 +352,10 @@ body {
 }
 
 .slide-fade-enter-active {
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 .slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
@@ -347,10 +364,10 @@ body {
 }
 
 .slide-fade-up-enter-active {
-  transition: all .26s ease;
+  transition: all 0.26s ease;
 }
 .slide-fade-up-leave-active {
-  transition: all .26s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 0.26s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-up-enter, .slide-fade-up-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
@@ -363,5 +380,4 @@ body {
   height: 1em;
   margin-right: 10px;
 }
-
 </style>
